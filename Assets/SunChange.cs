@@ -37,7 +37,9 @@ public class SunChange : MonoBehaviour
         if(devices.Count > 0)
         {
             targetDevice = devices[0];
+            Debug.Log(targetDevice);
         }
+        
         
 
 
@@ -58,5 +60,16 @@ public class SunChange : MonoBehaviour
 
         if (targetDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 primary2DAxisValue) && primary2DAxisValue != Vector2.zero)
             Debug.Log("primary Touchpad " + primary2DAxisValue);
+
+        
     }
+    void FixedUpdate()
+    {
+        if (Input.GetMouseButton(0))
+        {
+             x += 1;
+            sun.transform.localRotation = Quaternion.Euler(x,0.0f,0.0f);
+        }
+    }
+
 }
