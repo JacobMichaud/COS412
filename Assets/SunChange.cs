@@ -3,19 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
+
 public class SunChange : MonoBehaviour
 {
-    private InputDevice targetDevice;
+    private InputDevice rightController;
+    private InputDevice leftController;
     public bool imReady = false;
     public GameObject sun;
+    public GameObject moon;
     public float x;
-   
+    public float y;
+    public Transform raycastOrigin;
+    public LayerMask targetLayer;
+    public GameObject rotationalpoint;
+    bool primaryButtonValueRight, primaryButtonValueLeft;
+    float triggerValueRight, triggerValueLeft, gripValueRight, gripValueLeft;
+    Vector2 primary2DAxisValueRight, primary2DAxisValueLeft;
+    
     // Start is called before the first frame update
     void Start()
     {
         sun = GameObject.FindWithTag("sun");
-      x = 50.0f;
-    
+        moon = GameObject.FindWithTag("moon");
+        rotationalpoint = GameObject.FindWithTag("rotationalpoint");
             
        
 
@@ -27,49 +37,93 @@ public class SunChange : MonoBehaviour
     {
         
      
-        List<InputDevice> devices = new List<InputDevice>();
-            //InputDeviceCharacteristics leftControllerCharacteristics = InputDeviceCharacteristics.Left | InputDeviceCharacteristics.Controller;
-            InputDeviceCharacteristics rightControllerCharacteristics = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
-        //  InputDevices.GetDevicesWithCharacteristics(leftControllerCharacteristics,  devices);
-            InputDevices.GetDevicesWithCharacteristics(rightControllerCharacteristics,  devices);
+        List<InputDevice> Rdevices = new List<InputDevice>();
+        List<InputDevice> Ldevices = new List<InputDevice>();
+        InputDeviceCharacteristics leftControllerCharacteristics = InputDeviceCharacteristics.Left | InputDeviceCharacteristics.Controller;
+        InputDeviceCharacteristics rightControllerCharacteristics = InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
+        InputDevices.GetDevicesWithCharacteristics(leftControllerCharacteristics, Ldevices);
+        InputDevices.GetDevicesWithCharacteristics(rightControllerCharacteristics, Rdevices);
         
 
-        if(devices.Count > 0)
+        if(Rdevices.Count > 0)
         {
-            targetDevice = devices[0];
-            Debug.Log(targetDevice);
+            rightController = Rdevices[0];
+           
         }
-        
-        
-
-
-		if (targetDevice.TryGetFeatureValue(CommonUsages.primaryButton, out bool primaryButtonValue) && primaryButtonValue)
+        if(Ldevices.Count > 0)
         {
-            x += 1;
-            sun.transform.localRotation = Quaternion.Euler(x,0.0f,0.0f);
-            Debug.Log("pressing primary button");
-        }
+            leftController = Ldevices[0];
             
+        }
+        
+        
 
-        if (targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue) && triggerValue> 0.1f)
+        if (rightController.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonValueRight) && primaryButtonValueRight)
         {
-            Debug.Log("trigger pressed " + triggerValue);
-            x += triggerValue;
-            sun.transform.localRotation = Quaternion.Euler(x,0.0f,0.0f);
+            sunPlace();
+           // Debug.Log("pressing primary button");
+        }
+        if (rightController.TryGetFeatureValue(CommonUsages.grip, out gripValueRight) && gripValueRight > 0.1f){
+            y += gripValueRight;
+            rotationalpoint.transform.localRotation = Quaternion.Euler(x, 0.0f, y);
         }
 
-        if (targetDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 primary2DAxisValue) && primary2DAxisValue != Vector2.zero)
-            Debug.Log("primary Touchpad " + primary2DAxisValue);
+        if (rightController.TryGetFeatureValue(CommonUsages.trigger, out triggerValueRight) && triggerValueRight > 0.1f)
+        {
+           // Debug.Log("trigger pressed " + triggerValueRight);
+            x += triggerValueRight;
+            rotationalpoint.transform.localRotation = Quaternion.Euler(x, 0.0f, y);
+        }
 
+        if (rightController.TryGetFeatureValue(CommonUsages.primary2DAxis, out primary2DAxisValueRight) && primary2DAxisValueRight != Vector2.zero)
+           // Debug.Log("primary Touchpad " + primary2DAxisValueRight);
+
+        if (leftController.TryGetFeatureValue(CommonUsages.primaryButton, out primaryButtonValueLeft) && primaryButtonValueLeft)
+        {
+               
+                        
+                
+        }
+          //  Debug.Log("pressing primary button");
         
-    }
+        if (leftController.TryGetFeatureValue(CommonUsages.grip, out gripValueLeft) && gripValueLeft > 0.1f){
+            y -= gripValueLeft;
+            rotationalpoint.transform.localRotation = Quaternion.Euler(x, 0.0f, y);
+        }
+        if (leftController.TryGetFeatureValue(CommonUsages.trigger, out triggerValueLeft) && triggerValueLeft > 0.1f)
+        {
+          //  Debug.Log("trigger pressed " + triggerValueLeft);
+            x -= triggerValueLeft;
+            rotationalpoint.transform.localRotation = Quaternion.Euler(x, 0.0f, y);
+        }
+
+}
+    
     void FixedUpdate()
     {
         if (Input.GetMouseButton(0))
         {
              x += 1;
-            sun.transform.localRotation = Quaternion.Euler(x,0.0f,0.0f);
+            rotationalpoint.transform.localRotation = Quaternion.Euler(x,0.0f,y);
+        }
+        if (Input.GetMouseButton(1))
+        {
+             x -= 1;
+            rotationalpoint.transform.localRotation = Quaternion.Euler(x,0.0f,y);
         }
     }
+
+
+    private void sunPlace()
+    {
+        RaycastHit hit;
+        raycastOrigin = GameObject.FindWithTag("RightController").GetComponent<Transform>();
+        if(Physics.Raycast(raycastOrigin.position, raycastOrigin.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, targetLayer))
+        {
+            rotationalpoint.GetComponent<Transform>().position = hit.point;
+          //  Debug.Log(hit.transform.name);
+        }
+    }
+
 
 }

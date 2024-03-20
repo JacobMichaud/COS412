@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Anchor
   - sun
+  - RightController
+  - moon
+  - rotationalpoint
+  - LeftController
   layers:
   - Default
   - TransparentFX
@@ -13,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - shadow
+  - sunSpot
+  - triggerlayer
   - 
   - 
   - 
