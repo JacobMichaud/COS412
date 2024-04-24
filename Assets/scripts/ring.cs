@@ -9,6 +9,7 @@ public class ring : MonoBehaviour
     public bool holdingRing = false; // Flag to indicate if holding the ring
     float triggerValueRight;
     public ParticleSystem fireParticleSystem;
+    public GameObject key;
     // Update is called once per frame
 
     void Start()
@@ -50,6 +51,10 @@ public class ring : MonoBehaviour
             // If the collided object is the ring, set it as the object being held
             elementalring.transform.SetParent(this.transform);
             holdingRing = true;
+        }
+        if (other.CompareTag("key"))
+        {
+            key.transform.SetParent(this.transform);
         }
     }
 

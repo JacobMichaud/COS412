@@ -8,7 +8,7 @@ public class suntile3 : Interactable
     public Texture2D newTexture;
     public GameObject sun;
     public GameObject icewall;
-    public GameObject lighto;
+    public GameObject door;
     public GameObject audioo;
     public GameObject a1;
     public GameObject a2;
@@ -33,7 +33,7 @@ public class suntile3 : Interactable
             audioo.SetActive(false);
             a1.SetActive(false);
             a2.SetActive(false);
-
+            door.SetActive(false);
         }
     }
 }
