@@ -10,6 +10,11 @@ TagManager:
   - moon
   - rotationalpoint
   - LeftController
+  - DoorTrigger
+  - ring
+  - ice
+  - fire
+  - ring2
   layers:
   - Default
   - TransparentFX
@@ -20,9 +25,9 @@ TagManager:
   - shadow
   - sunSpot
   - triggerlayer
-  - 
-  - 
-  - 
+  - ice
+  - fire
+  - human
   - 
   - 
   - 

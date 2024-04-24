@@ -66,11 +66,19 @@ public class KeypadInteractionFPV : MonoBehaviour
             if (Physics.Raycast(raycastOrigin.position, raycastOrigin.TransformDirection(Vector3.forward), out hit2, Mathf.Infinity))
             {
 
-                if (hit2.collider.TryGetComponent(out KeypadButton keypadButton))
-                {
+                KeypadButton keypadButton = hit2.collider.GetComponent<KeypadButton>();
+                button1 keypadButton1 = hit2.collider.GetComponent<button1>();
                     if(done == true){
                         done = false;
-                    keypadButton.PressButton();
+                    if (keypadButton != null)
+                    {
+                     keypadButton.PressButton();
+                    }
+
+                    if (keypadButton1 != null)
+                    {
+                    keypadButton1.PressButton();
+                    }
                     yield return new WaitForSeconds(1f);
                     done = true;
                     }
@@ -78,4 +86,3 @@ public class KeypadInteractionFPV : MonoBehaviour
             }
                         }
     }
-}

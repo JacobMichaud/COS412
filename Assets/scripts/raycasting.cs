@@ -26,7 +26,7 @@ public class raycasting : MonoBehaviour
             Interactable interactableObject = hit.collider.GetComponent<Interactable>();
                  if (interactableObject != null)
                         {
-                        Debug.Log(interactableObject + "sun");
+                        
                           interactableObject.Interact(); // Calls the appropriate overridden method
                         }
                 }
@@ -42,7 +42,6 @@ public class raycasting : MonoBehaviour
                      Interactable interactableObject = hit2.collider.GetComponent<Interactable>();
                     if (interactableObject != null)
                         {
-                            Debug.Log(interactableObject + "moon");
                             interactableObject.Interact(); // Calls the appropriate overridden method
                         }
                 }
