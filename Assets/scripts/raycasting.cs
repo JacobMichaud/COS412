@@ -7,11 +7,14 @@ public class raycasting : MonoBehaviour
 
     public GameObject sun;
     public GameObject moon;
+    
     // Start is called before the first frame update
     void Start()
     {
         sun = GameObject.FindWithTag("sun");
         moon = GameObject.FindWithTag("moon");
+        
+        
     }
 
     // Update is called once per frame

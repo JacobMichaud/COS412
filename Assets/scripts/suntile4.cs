@@ -6,6 +6,7 @@ public class suntile4 : Interactable
 {
     public Terrain terrain;
     public Texture2D newTexture;
+    public Texture2D oldTexture;
     public GameObject moon;
     public GameObject firewall;
     public GameObject lighto;
@@ -17,7 +18,10 @@ public class suntile4 : Interactable
     {
         
     }
-
+    void OnApplicationQuit()
+    {
+        terrain.terrainData.terrainLayers[0].diffuseTexture = oldTexture;
+    }
     // Update is called once per frame
     void Update()
     {

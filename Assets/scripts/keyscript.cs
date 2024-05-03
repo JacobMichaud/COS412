@@ -18,7 +18,7 @@ public class keyscript : MonoBehaviour
     {
         if (other.CompareTag("key"))
         {
-            this.SetActive(false);
+            this.gameObject.SetActive(false);
         }
         
     }

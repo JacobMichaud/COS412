@@ -12,9 +12,11 @@ public class genericDoorOpen : Interactable
     private Vector3 door1TargetPosition;
     private Vector3 door2TargetPosition;
     private bool opening;
+    public bool down= false;
     public float duration = 2f; // Duration of the interpolation
     
     public GameObject sun;
+    
     
 
     // Speed at which the doors will open and close
@@ -29,11 +31,16 @@ public class genericDoorOpen : Interactable
         // Calculate the target positions for the doors (you can adjust these values according to your scene)
         door1TargetPosition = door1OriginalPosition + Vector3.forward * 2f;
         door2TargetPosition = door2OriginalPosition + Vector3.back * 2f; 
+        if(down == true){
+            door1TargetPosition = door1OriginalPosition + Vector3.down * 10f;
+        door2TargetPosition = door2OriginalPosition + Vector3.down * 10f; 
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (opening == false){
             CloseDoors();
         }

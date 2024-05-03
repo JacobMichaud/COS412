@@ -10,6 +10,7 @@ public class ring : MonoBehaviour
     float triggerValueRight;
     public ParticleSystem fireParticleSystem;
     public GameObject key;
+    public bool haskey = false;
     // Update is called once per frame
 
     void Start()
@@ -55,6 +56,14 @@ public class ring : MonoBehaviour
         if (other.CompareTag("key"))
         {
             key.transform.SetParent(this.transform);
+            haskey = true;
+        }
+        if (other.CompareTag("keydoor"))
+        {
+            if(haskey){
+                other.gameObject.SetActive(false);
+                key.SetActive(false);
+            }
         }
     }
 
